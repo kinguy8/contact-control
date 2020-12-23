@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "login": "marcus",
+      "password": "yamarcus",
+      "name": "Marcus Marcus"
+    },
+    {
+      "id": 2,
+      "login": "admin",
+      "password": "admin00",
+      "name": "Administrator"
+    },
+    {
+      "id": 3,
+      "login": "ethan1337",
+      "password": "ethan1337",
+      "name": "Ethan Hope"
+    }
+  ],
+  "contacts": [
+    {
+      "name": "sdasdadas",
+      "number": "dasdasdasd",
+      "id": 5
+    },
+    {
+      "name": "sdasdadas",
+      "number": "dasdasdasdddd",
+      "id": 6
+    },
+    {
+      "name": "sdasdadas1111",
+      "number": "dasdasdasdddd",
+      "id": 7
+    },
+    {
+      "name": "sdasdadas1111",
+      "number": "dasdasdasddddd",
+      "id": 8
+    },
+    {
+      "name": "dd",
+      "number": "",
+      "id": 9
+    },
+    {
+      "name": "zxc",
+      "number": "zxc",
+      "id": 10
+    }
+  ]
+}
