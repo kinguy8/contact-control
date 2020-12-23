@@ -6,7 +6,6 @@ import { CHECK_AUTH, LOGIN_USER, personState } from '../Constants/Constants'
 export const useAuth = () => {
     const [person, setState] = useReducer(Reducer, personState)
     const {request} = useRequest()
-    console.log("PERSON STATE", person)
 
     const login = useCallback((form, data) =>{
         setTimeout(() => {
@@ -33,7 +32,6 @@ export const useAuth = () => {
     useEffect(() => {
         if (person.isAuth)
         {
-            console.log("is auth")
             localStorage.setItem("userData", person.login)
         }
     }, [person])

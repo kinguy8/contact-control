@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect, useState} from 'react'
 import './App.css';
 import { contactState, personState } from './Constants/Constants'
 import { useRouter } from './Router'
@@ -10,21 +10,22 @@ import { useAuth } from './Hooks/auth.hooks';
 
 function App() {
   const { authUser, login, person } = useAuth()
-  console.log("auth person=", person)
+  const [status, setStatus] = useState(false)
   const isAuth = !!person.login
-  const routes = useRouter(isAuth)
-  useEffect(() => {
+  
+  useEffect(() =>{
     const data = localStorage.getItem('userData')
-    if (data) {
-      authUser(data)
+    if (data)
+    {
+      setStatus(true)
     }
   }, [])
-
+  const routes = useRouter(isAuth || status)
   return (
     <Context.Provider value={{ authUser, login }}>
-
+    
       <Router>
-        <Navbar />
+        {person.isAuth && <Navbar />}
         <div className="App">
           {routes}
         </div>

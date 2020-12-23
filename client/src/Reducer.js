@@ -42,11 +42,7 @@ function Reducer(state, action) {
                 alert: true
             })
         case FIND_CONTACT:
-            const contact = action.contact.find
-            console.log("contact", contact)
-            console.log("array - ", action.payload)
             const findedContact = action.payload.filter(contact => contact.name == action.contact.find)
-            console.log("------------------------------find", findedContact)
             return ({
                 data: findedContact,
                 loading: false,

@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import Contacts from './Pages/Contacts'
 import Auth from './Pages/Auth'
 
-export const useRouter = status => { 
+export const useRouter = (status) => {
     if (status) {
         return (
             <Switch>
@@ -22,7 +22,7 @@ export const useRouter = status => {
             <Redirect to="/login" />
         </Switch>
     )
-    
+
 }
 
 
