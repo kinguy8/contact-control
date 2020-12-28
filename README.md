@@ -1,13 +1,13 @@
 # Contact-control
 
 Installation for json-server using npm (a Node package manager):
-`$ npm install -g json-server`
-`$ cd api`
-`$ npm i --save json-server`
++ `$ npm install -g json-server`
++ `$ cd api`
++ `$ npm i --save json-server`
 
 Installation for json-server using npm (a Node package manager):
-`$ cd client`
-`$ npm i react-router-dom`
++ `$ cd client`
++ `$ npm i react-router-dom`
 
 ### Installation from source (requires git):
 + $ git clone https://github.com/kinguy8/contact-control.git
