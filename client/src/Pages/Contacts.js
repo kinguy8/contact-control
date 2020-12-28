@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useReducer } from 'react'
 import { useRequest } from '../Hooks/requst.hooks'
-import { FETCH_DATA, DELETE_DATA, ADD_DATA, contactState, FIND_CONTACT } from '../Constants/Constants'
+import { FETCH_DATA, DELETE_DATA, ADD_DATA, contactState, FIND_CONTACT, ALERT_CLEAR } from '../Constants/Constants'
 import Reducer from '../Reducer'
 import ContactList from '../Components/ContactList'
 import ContactSearch from '../Components/ContactSearch'
+import Alert from '../Components/Alert'
 
 const Contacts = () => {
     const [state, dispatch] = useReducer(Reducer, contactState)
@@ -18,6 +19,15 @@ const Contacts = () => {
         setContact({ ...contact, [event.target.name]: event.target.value })
     }
 
+    const findContactHandler = async (event) => {
+        const data = await request('/contacts')
+        dispatch({
+            type: FIND_CONTACT,
+            payload: !event.target.value ? data : state.data,
+            contact: event.target.value
+        })
+    }
+
     useEffect(async () => {
         const data = await request('/contacts')
         setTimeout(() => {
@@ -29,7 +39,7 @@ const Contacts = () => {
 
     }, [])
 
-    async function deleteContact(id) {
+    const deleteContact = async(id) =>{
         const data = await request(`/contacts/${id}`, 'DELETE')
         if (data) {
             dispatch({
@@ -39,84 +49,73 @@ const Contacts = () => {
         }
     }
 
-    async function addContact(newItem) {
-        const data = await request('/contacts', 'POST', newItem, {'Content-Type': 'application/json'})
+    const addContact = async (newItem) =>{
+        const contact = {
+            "id": state.data.length === 0 ? state.data.length + 1 : state.data.length + 1,
+            "name": newItem.name,
+            "number": newItem.number
+          }
+        const data = await request('/contacts', 'POST', contact, { 'Content-Type': 'application/json' })
         if (data) {
             dispatch({
                 type: ADD_DATA,
-                payload: newItem
+                payload: contact
             })
         }
     }
 
-    const findContact = (data) =>{
-        console.log("clicked", data)
+    const clearAlert = () =>{
         dispatch({
-            type: FIND_CONTACT,
-            payload: state.data,
-            contact: data
+            type: ALERT_CLEAR
         })
     }
-    useEffect(()=>{
-        setTimeout(()=>{
-            dispatch({
-                type:"RESET_STATE"
-            })
-        },4000)
-    },[state])
 
     return (
-
-        <div class="row">
-            <div class="col s4">
+        <div id="app" class="container-fluid">
+            
+            <div id="panel" class="bg-light sidebar">
                 <form class="col s12 addContact">
-                <h1>Контакты</h1>
-                    <div class="m5 row centered">
-                        <div class="input-field col s8">
-                            <input placeholder="Имя"
-                            id="name"
-                            type="text" 
-                            class="validate"
+                    <h1>Контакты</h1>
+                    <div class="mb-3">
+                        <input type="email"
+                            placeholder="Имя"
+                            class="form-control"
+                            id="nameContact"
                             name="name"
-                            onChange={changeHandler} />
-                        </div>
+                            aria-describedby="emailHelp"
+                            onChange={changeHandler}
+                        />
                     </div>
-                    <div class="row centered">
-                        <div class="input-field col s8">
-                            <input placeholder="Номер"
-                             id="number"
-                             type="text"
-                             class="validate"
-                             name="number"
-                             onChange={changeHandler} />   
-                        </div>
+                    <div class="mb-3">
+                        <input type="text"
+                            placeholder="Номер"
+                            class="form-control"
+                            id="number"
+                            name="number"
+                            onChange={changeHandler}
+                        />
                     </div>
-                    <div class="row">
                     <button type="button"
-        className="btn btn-outline-danger btn-sm"
-        onClick={() => addContact(contact)}>Добавить
-      </button>
-                    </div>
+                        className="btn btn-outline-primary"
+                        onClick={() => addContact(contact)}>Добавить</button>
                 </form>
             </div>
-
-            <div class="col s8">
-                <h1>Контакты</h1>
+            <div id="site" class="content">
+                <h2>Контакты</h2>
+                {state.msg ? <Alert state={state} clearAlert={clearAlert}/> : null}
                 {state.data.length ? (
                     <div>
-                    <ContactSearch
-                    data={state.data}
-                    findContact={findContact}
-                    />
-                    <ContactList
-                    data={state.data}
-                    deleteContact={deleteContact} />
+                        <ContactSearch
+                            findContactHandler={findContactHandler}
+                        />
+                        <ContactList
+                            data={state.data}
+                            deleteContact={deleteContact} />
                     </div>
-                ) : <h3>{state.msg}</h3>}
-
+                ) : <h1>Список пуст</h1>}
             </div>
-
         </div>
+
 
     )
 }

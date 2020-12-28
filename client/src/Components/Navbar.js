@@ -1,16 +1,26 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useContext } from 'react'
+import Context from '../Context/Context'
+import { NavLink, useHistory } from 'react-router-dom'
 const Navbar = () => {
+  const auth = useContext(Context)
+  const history = useHistory()
+
+  const logoutHandler = (event) => {
+    event.preventDefault()
+    localStorage.removeItem("userData")
+    history.go('/login')
+  }
+
   return (
-    <nav>
-      <div class="nav-wrapper cyan darken-2">
-        <a href="#" class="brand-logo">ContactController</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><NavLink to="/contacts">Контакты</NavLink></li>
-          <li><NavLink to="/">Выйти</NavLink></li>
-        </ul>
-      </div>
-    </nav>
+    <ul class="navbar navbar-dark bg-primary nav justify-content-end">
+      <li class="nav-item">
+        <NavLink to="/contacts" className="nav-link link" href="#">Контакты</NavLink>
+      </li>
+      <li class="nav-item">
+        <a href="/login" onClick={logoutHandler} className="nav-link link" href="#">Выйти</a>
+      </li>
+    </ul>
+
   )
 }
 

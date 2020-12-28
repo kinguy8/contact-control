@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer } from 'react'
+import React, { useCallback } from 'react'
 
 export const useRequest = () => {
 

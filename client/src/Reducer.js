@@ -1,4 +1,4 @@
-import { FETCH_DATA, LOGIN_USER, CHECK_AUTH, DELETE_DATA, ADD_DATA, FIND_CONTACT } from './Constants/Constants'
+import { FETCH_DATA, LOGIN_USER, CHECK_AUTH, DELETE_DATA, ADD_DATA, FIND_CONTACT, ALERT_CLEAR } from './Constants/Constants'
 
 function Reducer(state, action) {
     switch (action.type) {
@@ -16,7 +16,10 @@ function Reducer(state, action) {
                 msg: result.length ? "Успешно вошли в систему" : "Неверные данные",
                 name: result.length ? result[0].name : "",
                 isAuth: result.length ? true : false,
-                login: result.length ? result[0].login : ""
+                login: result.length ? result[0].login : "",
+                alert: true,
+                alertStyle: result.length ? "alert alert-success" : "alert alert-danger",
+                visibility: "block"
             })
         case CHECK_AUTH:
             const authUser = action.userData
@@ -28,25 +31,31 @@ function Reducer(state, action) {
             })
         case DELETE_DATA:
             return {
-                ...state,
                 data: state.data.filter(contact => contact.id !== action.payload),
                 alert: true,
-                msg: 'Контакт удален'
+                msg: state.data.length ? 'Контакт удален' : 'Список пуст',
+                alertStyle: state.data.length ? "alert alert-warning" : "alert alert-danger"
             }
         case ADD_DATA:
             return ({
-                ...state,
                 loading: false,
                 data: [...state.data, action.payload],
                 msg: "Контакт успешно добавлен",
-                alert: true
+                alert: true,
+                visibility: 'block',
+                alertStyle: "alert alert-success"
             })
         case FIND_CONTACT:
-            const findedContact = action.payload.filter(contact => contact.name == action.contact.find)
+            const findedContact = action.payload.filter(contact => contact.name.includes(action.contact))
             return ({
-                data: findedContact,
-                loading: false,
-                msg: findedContact.length ? "Контакт найден" : "Контакт не найден"
+                data: action.contact !== "" ? findedContact : action.payload,
+                loading: false
+            })
+        case ALERT_CLEAR:
+            return ({
+                ...state,
+                alert: false,
+                visibility: 'none'
             })
         default:
             return state

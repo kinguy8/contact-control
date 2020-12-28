@@ -19,36 +19,5 @@
       "name": "Ethan Hope"
     }
   ],
-  "contacts": [
-    {
-      "name": "sdasdadas",
-      "number": "dasdasdasd",
-      "id": 5
-    },
-    {
-      "name": "sdasdadas",
-      "number": "dasdasdasdddd",
-      "id": 6
-    },
-    {
-      "name": "sdasdadas1111",
-      "number": "dasdasdasdddd",
-      "id": 7
-    },
-    {
-      "name": "dd",
-      "number": "",
-      "id": 9
-    },
-    {
-      "name": "zxc",
-      "number": "zxc",
-      "id": 10
-    },
-    {
-      "name": "Dmitriy",
-      "number": "721312312312",
-      "id": 11
-    }
-  ]
+  "contacts": []
 }

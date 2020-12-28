@@ -3,8 +3,8 @@ import Contact from './Contact'
 
 const ContactList = ({ data, deleteContact }) => {
   return (
-    <table>
-      <thead>
+    <table className="table">
+      <thead className="table-dark">
         <tr>
           <th>Id</th>
           <th>Имя</th>
@@ -12,7 +12,7 @@ const ContactList = ({ data, deleteContact }) => {
           <th>Действия</th>
         </tr>
       </thead>
-
+      <tbody>
       {data.map((item, index) => {
         return (
           <Contact
@@ -22,7 +22,7 @@ const ContactList = ({ data, deleteContact }) => {
           />
         );
       })}
-
+    </tbody>
     </table>
 
   )

@@ -1,26 +1,13 @@
-import React, {useState} from 'react'
+import React from 'react'
 
-const ContactSearch = ({data, findContact}) =>{
-    const [contact, setContact] = useState()
-
-    const changeHandler = event => {
-        setContact({[event.target.name]: event.target.value})
-    }
-
-
-    return(
-        <form action="#">
-    <div class="file-field input-field">
-      <div class="input-field col s10">
-        <input type="text" name="find" class="validate" placeholder="Поиск по имени" onChange={changeHandler}/>
-      </div>
-      <button type="button"
-        className="btn btn-outline-danger btn-sm"
-        onClick={() => findContact(contact)}>Найти
-      </button>
+const ContactSearch = ({ findContactHandler }) => {
+  
+  return (
+    <div className="input-group mb-3">
+      <input type="text" className="form-control" name="find" placeholder="Найти по имени" aria-label="Recipient's username" aria-describedby="button-addon2" onChange={findContactHandler} />
+      <button className="btn btn-info" type="button" id="button-addon2">Поиск</button>
     </div>
-  </form>
-    )
+  )
 }
 
 export default ContactSearch
